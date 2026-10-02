@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turnover Portal · Berkshire Custom Cleaning</title>
+<meta name="description" content="Concept: an automated vacation-rental turnover booking portal that syncs with Airbnb, VRBO and Booking.com checkout dates.">
+<link rel="stylesheet" href="css/bcc.css">
+<style>
+  :root {
+    --amber: #d99a00;
+    --amber-soft: #fdf3d4;
+    --amber-ink: #7d5500;
+    --rose-soft: #fae6df;
+    --rose-ink: #9b3b23;
+    --ok-soft: #e1f2e8;
+    --ok-ink: #1f6b45;
+    --mist: #f3f1ec;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  html { overflow-x: clip; }
+  .nav a.btn-primary { color: #fff; }
+  body { overflow-x: clip; }
+  .ic { width: 18px; height: 18px; flex: none; }
+  .ic-sm { width: 14px; height: 14px; }
+  .ic-lg { width: 22px; height: 22px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  button { font: inherit; color: inherit; }
+
+  /* ---------- Hero ---------- */
+  .t-hero { padding: clamp(40px, 6vw, 80px) 0 clamp(40px, 6vw, 72px); position: relative; overflow: hidden; }
+  .t-hero::before { content: ""; position: absolute; inset: 0; background:
+      radial-gradient(800px 380px at 88% 10%, rgba(31,158,156,.12), transparent 70%),
+      radial-gradient(600px 300px at 0% 100%, rgba(245,179,1,.08), transparent 70%); pointer-events: none; }
+  .t-hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .t-hero h1 { font-size: clamp(38px, 5vw, 62px); margin: 14px 0 18px; max-width: 15ch; }
+  .t-hero h1 em { font-style: normal; color: var(--teal); }
+  .t-hero .lede { margin-bottom: 28px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
+  .hero-stats li { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; padding: 14px 16px; background: rgba(255,255,255,.6); border: 1px solid var(--line); border-radius: var(--r); }
+  .hero-stats .ic-wrap { width: 32px; height: 32px; border-radius: 9px; background: var(--teal-soft); color: #126f6d; display: grid; place-items: center; flex: none; }
+  .hero-stats b { display: block; font-size: 14px; line-height: 1.3; color: var(--ink); }
+  .hero-stats span { display: block; font-size: 12.5px; line-height: 1.35; color: var(--ink-3); margin-top: 2px; }
+
+  .hero-feed { position: relative; display: grid; gap: 12px; }
+  .feed-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 14px 16px; display: grid; grid-template-columns: 38px 1fr auto; gap: 12px; align-items: center; }
+  .feed-card:nth-child(1) { margin-right: 28px; }
+  .feed-card:nth-child(2) { margin-left: 28px; box-shadow: var(--shadow-lg); }
+  .feed-card:nth-child(3) { margin-right: 12px; }
+  .feed-ico { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; }
+  .feed-card b { display: block; font-size: 14px; }
+  .feed-card p { font-size: 13px; color: var(--ink-3); line-height: 1.4; }
+  .feed-time { font-size: 12px; color: var(--ink-3); align-self: start; white-space: nowrap; }
+  .feed-head { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--ink-3); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(46,139,87,.5); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46,139,87,.45); } 70% { box-shadow: 0 0 0 8px rgba(46,139,87,0); } 100% { box-shadow: 0 0 0 0 rgba(46,139,87,0); } }
+
+  /* ---------- How it works ---------- */
+  .how { padding: clamp(48px, 7vw, 96px) 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
+  .sec-head h2 { margin-top: 10px; max-width: 18ch; }
+  .sec-head .lede { font-size: 16px; max-width: 46ch; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .step { padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+  .step-n { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+  .step-n i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font-size: 12px; letter-spacing: 0; }
+  .step h3 { font-size: 21px; }
+  .step p { color: var(--ink-2); font-size: 15px; }
+  .step-vis { margin-top: auto; padding-top: 14px; }
+  .mini { background: var(--mist); border: 1px solid var(--line); border-radius: 12px; padding: 12px; font-size: 12px; }
+  .mini-input { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); overflow: hidden; white-space: nowrap; }
+  .mini-plats { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .mini-plats span { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 99px; background: #fff; border: 1px solid var(--line); font-weight: 600; color: var(--ink-2); }
+  .mini-plats span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .mini-tl { position: relative; height: 34px; border-radius: 8px; background: #fff; border: 1px solid var(--line); overflow: hidden; }
+  .mini-tl .g1 { position: absolute; left: 0; width: 30%; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, #dfe6e8 0 6px, #eef2f3 6px 12px); }
+  .mini-tl .cl { position: absolute; left: 33%; width: 38%; top: 6px; bottom: 6px; background: var(--teal); border-radius: 6px; color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 11px; }
+  .mini-tl .g2 { position: absolute; right: 0; width: 22%; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, #dfe6e8 0 6px, #eef2f3 6px 12px); }
+  .mini-tl-l { display: flex; justify-content: space-between; margin-top: 6px; color: var(--ink-3); font-weight: 600; }
+  .mini-photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .mini-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
+  .mini-qa { display: flex; justify-content: space-between; margin-top: 8px; font-weight: 600; color: var(--ok-ink); }
+
+  /* ---------- Portal section ---------- */
+  .portal-sec { padding: clamp(48px, 7vw, 96px) 0; background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%); border-top: 1px solid var(--line); }
+  .app { background: #fff; border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden; }
+  .app-chrome { display: flex; align-items: center; gap: 14px; padding: 12px 18px; background: var(--navy); color: #c9d6da; font-size: 13px; }
+  .app-chrome .dots { display: flex; gap: 6px; }
+  .app-chrome .dots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.18); }
+  .app-url { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.07); border-radius: 8px; padding: 6px 12px; max-width: 460px; margin: 0 auto; font-family: var(--mono); font-size: 12px; color: #9fb3b9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .app-user { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 600; white-space: nowrap; }
+  .app-user .av { width: 28px; height: 28px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; font-size: 12px; }
+  .app-body { padding: 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+
+  /* Property switcher */
+  .props { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .prop { text-align: left; display: grid; grid-template-columns: 56px 1fr; gap: 4px 12px; align-items: center; padding: 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; cursor: pointer; transition: border-color .15s, box-shadow .15s, background .15s; position: relative; }
+  .prop:hover { border-color: #c9d7d6; }
+  .prop[aria-selected="true"] { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft); background: linear-gradient(180deg, #fff, #f8fcfc); }
+  .prop-thumb { grid-row: span 3; width: 56px; height: 56px; border-radius: 10px; background-size: cover; background-position: center; background-color: var(--paper-2); }
+  .prop-name { font-weight: 700; font-size: 15px; line-height: 1.2; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prop-town { font-weight: 500; color: var(--ink-3); }
+  .prop-meta { display: flex; gap: 10px; font-size: 12.5px; color: var(--ink-2); flex-wrap: wrap; }
+  .prop-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .prop-meta .ic { width: 14px; height: 14px; color: var(--ink-3); }
+  .prop-next { font-size: 12px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+  .src-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex: none; }
+  .prop-flag { position: absolute; top: 10px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 3px var(--amber-soft); }
+
+  /* Connect panel */
+  .connect { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; background: var(--mist); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 16px; align-items: end; }
+  .connect-top { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .connect-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .badge-step { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); background: var(--teal-soft); padding: 3px 8px; border-radius: 6px; }
+  .plats { display: flex; gap: 6px; flex-wrap: wrap; }
+  .plat { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px; border-radius: 99px; background: #fff; border: 1px solid var(--line); font-size: 12.5px; font-weight: 600; color: var(--ink-2); cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
+  .plat:hover { border-color: #c9d7d6; }
+  .plat[aria-pressed="true"] { border-color: var(--navy); color: var(--ink); box-shadow: inset 0 0 0 1px var(--navy); }
+  .plat-mark { width: 16px; height: 16px; border-radius: 5px; display: grid; place-items: center; color: #fff; font-size: 10px; font-weight: 800; }
+  .field label { display: block; font-size: 12.5px; margin-bottom: 6px; }
+  .input-ic { position: relative; }
+  .input-ic .ic { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-3); }
+  .input-ic input { padding-left: 38px; font-family: var(--mono); font-size: 13px; height: 46px; }
+  .input-ic input[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 3px var(--rose-soft); }
+  .field-help { font-size: 12.5px; color: var(--ink-3); margin-top: 6px; }
+  .field-help.err { color: var(--danger); font-weight: 600; }
+  .sync-btn { min-width: 156px; }
+  .sync-btn .ic { transition: transform .3s; }
+  .sync-btn[aria-busy="true"] .ic { animation: spin .9s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .sync-status { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: var(--ink-2); }
+  .sync-ok { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--ok-ink); }
+  .sync-ok .tick { width: 18px; height: 18px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; }
+  .sync-meta { color: var(--ink-3); }
+  .sync-log { grid-column: 1 / -1; list-style: none; margin: 0; padding: 12px 14px; background: #fff; border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 6px; font-size: 13px; }
+  .sync-log[hidden] { display: none; }
+  .sync-log li { display: flex; align-items: center; gap: 10px; color: var(--ink-3); transition: color .2s; }
+  .sync-log li .s { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; flex: none; }
+  .sync-log li.run { color: var(--ink); }
+  .sync-log li.run .s { border-color: var(--teal); border-top-color: transparent; animation: spin .7s linear infinite; }
+  .sync-log li.done { color: var(--ink-2); }
+  .sync-log li.done .s { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .sync-log code { font-family: var(--mono); font-size: 12px; background: var(--mist); padding: 1px 6px; border-radius: 4px; }
+  details.ics { grid-column: 1 / -1; font-size: 12.5px; }
+  details.ics summary { cursor: pointer; color: var(--ink-3); font-weight: 600; width: max-content; max-width: 100%; }
+  details.ics summary:hover { color: var(--ink); }
+  details.ics pre { margin: 8px 0 0; max-height: 220px; overflow: auto; background: var(--navy); color: #bfe3e1; border-radius: 10px; padding: 12px 14px; font: 11.5px/1.55 var(--mono); }
+
+  /* Peak banner */
+  .peak { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border-radius: 16px; background: linear-gradient(100deg, #fff6dc 0%, #fdeec9 55%, #fbe3c4 100%); border: 1px solid #f1d99a; }
+  .peak-ico { width: 40px; height: 40px; border-radius: 12px; background: #fff; display: grid; place-items: center; color: #b4640b; flex: none; box-shadow: 0 1px 2px rgba(125,85,0,.15); }
+  .peak-txt { flex: 1; min-width: 0; }
+  .peak-txt b { display: block; font-size: 15px; color: #5c3f00; }
+  .peak-txt p { font-size: 13.5px; color: #7d5a14; line-height: 1.45; }
+  .peak-season { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #9a5a00; margin-bottom: 2px; }
+
+  /* Switch */
+  .sw { display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink); text-align: left; }
+  .sw .track { width: 40px; height: 24px; border-radius: 99px; background: #cfd6d6; position: relative; transition: background .2s; flex: none; }
+  .sw .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .2s; }
+  .sw[aria-checked="true"] .track { background: var(--teal); }
+  .sw[aria-checked="true"] .track::after { transform: translateX(16px); }
+  .peak .sw { white-space: nowrap; color: #5c3f00; }
+  .peak .sw[aria-checked="true"] .track { background: var(--pine); }
+
+  /* Main grid */
+  .main-grid { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+  .panel { border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .panel-head h3 { font-family: var(--sans); font-size: 15px; font-weight: 700; letter-spacing: 0; display: flex; align-items: center; gap: 8px; }
+  .panel-head h3 .ic { color: var(--ink-3); }
+
+  /* Calendar */
+  .cal-nav { display: flex; align-items: center; gap: 6px; }
+  .cal-month { font-family: var(--serif); font-size: 20px; font-weight: 500; min-width: 150px; text-align: center; }
+  .icon-btn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: #fff; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); transition: background .15s, border-color .15s; }
+  .icon-btn:hover { background: var(--mist); color: var(--ink); }
+  .pill-btn { height: 34px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink-2); }
+  .pill-btn:hover { background: var(--mist); color: var(--ink); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--ink-2); font-weight: 500; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 14px; height: 10px; border-radius: 3px; display: inline-block; }
+  .lg-stay { background: var(--navy-2); }
+  .lg-auto { background: var(--teal); }
+  .lg-same { background: var(--amber); }
+  .lg-appr { background: var(--danger); }
+  .lg-conf { background: var(--ok); }
+
+  .cal-grid { padding: 0 0 4px; }
+  .cal-dow { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line); }
+  .cal-dow span { padding: 8px 10px; }
+  .cal-week { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+  .cal-week:last-child { border-bottom: 0; }
+  .cal-cell { min-height: 100px; padding: 6px 6px 6px; border-right: 1px solid var(--line); position: relative; display: flex; flex-direction: column; }
+  .cal-cell:last-child { border-right: 0; }
+  .cal-cell.out { background: #fbfaf7; }
+  .cal-cell.out .cal-num { color: #b7bfc1; }
+  .cal-cell.is-peak { background: linear-gradient(180deg, #fff9e9, #fffdf6); }
+  .cal-num { font-size: 12.5px; font-weight: 600; color: var(--ink-2); width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; }
+  .cal-cell.today .cal-num { background: var(--teal); color: #fff; }
+  .cal-cell.past:not(.today) .cal-num { color: var(--ink-3); }
+  .cal-peak-tag { position: absolute; top: 9px; right: 8px; color: #c27b0c; }
+  .cal-bars { position: absolute; left: 0; right: 0; top: 34px; height: 24px; display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); pointer-events: none; }
+  .bar { height: 24px; background: var(--navy-2); color: #fff; font-size: 11.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; padding: 0 8px; border-radius: 7px; margin: 0 2px; overflow: hidden; white-space: nowrap; min-width: 0; }
+  .bar.cl { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: 0; }
+  .bar.cr { border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 0; }
+  .bar.past { background: #8a9ca1; }
+  .bar .src-dot { box-shadow: 0 0 0 1.5px rgba(255,255,255,.7); }
+  .bar span { overflow: hidden; text-overflow: ellipsis; }
+  .bar small { opacity: .7; font-weight: 500; }
+  .cal-turn { margin-top: auto; width: 100%; display: flex; align-items: center; gap: 5px; height: 26px; padding: 0 7px; border-radius: 7px; font-size: 11.5px; font-weight: 700; cursor: pointer; border: 1px solid transparent; text-align: left; white-space: nowrap; overflow: hidden; transition: transform .12s, box-shadow .15s; }
+  .cal-turn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px -4px rgba(14,39,49,.35); }
+  .cal-turn .ic { width: 13px; height: 13px; }
+  .cal-turn span { overflow: hidden; text-overflow: ellipsis; }
+  .st-auto.cal-turn { background: var(--teal-soft); color: #0f6664; border-color: #b5e1dd; }
+  .st-sameday.cal-turn { background: var(--amber-soft); color: var(--amber-ink); border-color: #f0d68b; }
+  .st-approval.cal-turn { background: var(--rose-soft); color: var(--rose-ink); border-color: #f0c3b5; }
+  .st-confirmed.cal-turn { background: var(--ok-soft); color: var(--ok-ink); border-color: #b8dfc7; }
+  .st-completed.cal-turn { background: var(--mist); color: var(--ink-3); border-color: var(--line); }
+  .cal-grid.fresh .bar, .cal-grid.fresh .cal-turn, .agenda.fresh .ag-day { animation: popin .45s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i, 0) * 35ms); }
+  @keyframes popin { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; transform: none; } }
+
+  /* Agenda (mobile calendar) */
+  .agenda { display: none; list-style: none; margin: 0; padding: 4px 0; }
+  .ag-day { display: grid; grid-template-columns: 46px 1fr; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .ag-day:last-child { border-bottom: 0; }
+  .ag-date { text-align: center; line-height: 1.1; }
+  .ag-date small { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+  .ag-date b { display: block; font-family: var(--serif); font-weight: 500; font-size: 22px; margin-top: 2px; }
+  .ag-day.today .ag-date b { color: var(--teal); }
+  .ag-items { display: grid; gap: 6px; min-width: 0; }
+  .ag-ev { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); min-width: 0; }
+  .ag-ev .ic { color: var(--ink-3); width: 15px; height: 15px; }
+  .ag-ev span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ag-ev b { color: var(--ink); font-weight: 600; }
+  .agenda .cal-turn { height: 34px; font-size: 12.5px; padding: 0 10px; }
+  .agenda .cal-turn .when { margin-left: auto; font-weight: 600; opacity: .8; }
+  .ag-empty { padding: 28px 16px; text-align: center; color: var(--ink-3); font-size: 14px; }
+
+  /* Rail */
+  .rail { display: grid; gap: 14px; }
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; background: #fff; min-width: 0; }
+  .kpi small { display: block; font-size: 11.5px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+  .kpi b { display: block; font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.15; margin-top: 4px; }
+  .kpi span { display: block; font-size: 12px; color: var(--ink-3); }
+  .kpi.wide { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; background: var(--navy); border-color: var(--navy); color: #fff; }
+  .kpi.wide small { color: #8fb3b8; }
+  .kpi.wide b { font-family: var(--sans); font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .kpi.wide span { color: #b7cbcf; }
+  .kpi.wide .k-ico { width: 40px; height: 40px; border-radius: 12px; background: rgba(43,179,177,.18); color: var(--teal-2); display: grid; place-items: center; flex: none; }
+  .kpi.warn b { color: var(--rose-ink); }
+  .settings { padding: 4px 16px 14px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+  .set-row:last-child { border-bottom: 0; }
+  .set-row .lbl { font-size: 13.5px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .set-row .lbl .ic { color: var(--ink-3); width: 16px; height: 16px; }
+  .set-row .lbl small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; }
+  .set-row select { width: auto; height: 34px; padding: 0 30px 0 10px; font-size: 13.5px; font-weight: 600; border-radius: 9px; -webkit-appearance: none; appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237b8a8f' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center; }
+  .set-row .sw { font-size: 0; }
+
+  /* Turnover list */
+  .list-tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .seg { display: inline-flex; background: var(--mist); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+  .seg button { border: 0; background: transparent; height: 28px; padding: 0 12px; border-radius: 7px; font-size: 13px; font-weight: 600; color: var(--ink-3); cursor: pointer; white-space: nowrap; }
+  .seg button[aria-pressed="true"], .seg button[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(14,39,49,.12); }
+  .seg .n { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; margin-left: 4px; border-radius: 99px; background: var(--line); font-size: 11px; color: var(--ink-2); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .row { display: grid; grid-template-columns: 58px minmax(0, 1fr) 150px 132px 196px; gap: 16px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); position: relative; transition: background .15s; }
+  .row:last-child { border-bottom: 0; }
+  .row:hover { background: #fcfbf8; }
+  .row::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0; background: transparent; }
+  .row.st-sameday::before { background: var(--amber); }
+  .row.st-approval::before { background: var(--danger); }
+  .row-date { text-align: center; border: 1px solid var(--line); border-radius: 12px; padding: 6px 0 7px; background: #fff; line-height: 1.1; }
+  .row-date small { display: block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+  .row-date b { display: block; font-family: var(--serif); font-size: 22px; font-weight: 500; }
+  .row-date.today { border-color: var(--teal); background: var(--teal-soft); }
+  .row-main { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; min-width: 0; display: grid; gap: 3px; border-radius: 8px; }
+  .row-main:hover .row-prop { color: var(--teal); }
+  .row-prop { font-weight: 700; font-size: 15px; transition: color .15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-prop .muted { font-weight: 500; }
+  .row-window { font-size: 13.5px; color: var(--ink-2); display: block; }
+  .row-window .nw { white-space: nowrap; }
+  .row-window .arrow { color: var(--ink-3); }
+  .row-window em { font-style: normal; font-weight: 600; color: var(--ink); }
+  .row-window.tight em { color: var(--amber-ink); }
+  .row-guests { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .crew { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-2); min-width: 0; }
+  .crew small { display: block; font-weight: 500; font-size: 11.5px; color: var(--ink-3); }
+  .avs { display: flex; flex: none; }
+  .avs i { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; color: #fff; border: 2px solid #fff; margin-left: -7px; }
+  .avs i:first-child { margin-left: 0; }
+  .avs i.more { background: var(--paper-2); color: var(--ink-2); }
+  .st-chip { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 99px; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+  .st-chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .st-chip.st-auto { background: var(--teal-soft); color: #0f6664; }
+  .st-chip.st-sameday { background: var(--amber-soft); color: var(--amber-ink); }
+  .st-chip.st-approval { background: var(--rose-soft); color: var(--rose-ink); }
+  .st-chip.st-confirmed { background: var(--ok-soft); color: var(--ok-ink); }
+  .st-chip.st-completed { background: var(--mist); color: var(--ink-2); }
+  .st-sub { display: block; font-size: 11.5px; color: var(--ink-3); margin-top: 4px; font-weight: 500; }
+  .row-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .btn-xs { height: 32px; padding: 0 14px; font-size: 13px; }
+  .btn-soft { background: var(--mist); color: var(--ink); border-color: var(--line); }
+  .btn-soft:hover { background: var(--paper-2); }
+  .btn[disabled] { opacity: .55; cursor: default; pointer-events: none; }
+  .btn-done { background: var(--ok-soft); color: var(--ok-ink); cursor: default; }
+  .grp { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; white-space: nowrap; padding: 10px 16px 8px; background: var(--mist); border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .grp-n { font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--ink-3); }
+  .grp-peak { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; letter-spacing: .04em; color: var(--amber-ink); background: var(--amber-soft); padding: 3px 9px; border-radius: 99px; font-size: 11px; }
+  .rows-more { display: block; width: 100%; height: 46px; border: 0; border-top: 1px solid var(--line); background: #fff; font-size: 14px; font-weight: 600; color: var(--teal); cursor: pointer; }
+  .rows-more:hover { background: #f6fbfb; }
+  .rows-more[hidden] { display: none; }
+  .list-foot { padding: 12px 16px; font-size: 12.5px; color: var(--ink-3); border-top: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+  .rows-empty { padding: 32px 16px; text-align: center; color: var(--ink-3); }
+
+  /* ---------- Drawer ---------- */
+  .scrim { position: fixed; inset: 0; background: rgba(14,39,49,.42); backdrop-filter: blur(2px); z-index: 80; opacity: 0; transition: opacity .25s; }
+  .scrim.show { opacity: 1; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(500px, 100%); background: #fff; z-index: 90; display: flex; flex-direction: column; box-shadow: -24px 0 60px -20px rgba(14,39,49,.4); transform: translateX(104%); transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+  .drawer.show { transform: none; }
+  .drawer[hidden], .scrim[hidden] { display: none; }
+  .dr-head { padding: 18px 22px 16px; border-bottom: 1px solid var(--line); }
+  .dr-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .dr-head h3 { font-size: 26px; }
+  .dr-sub { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+  .dr-body { flex: 1; overflow-y: auto; padding: 18px 22px 24px; display: grid; gap: 22px; align-content: start; overscroll-behavior: contain; }
+  .dr-sec h4 { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .dr-sec h4 .muted { text-transform: none; letter-spacing: 0; font-weight: 600; }
+  .tl { position: relative; height: 54px; border-radius: 12px; background: var(--mist); border: 1px solid var(--line); overflow: hidden; }
+  .tl-guest { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, #dde5e7 0 7px, #ecf0f1 7px 14px); }
+  .tl-clean { position: absolute; top: 9px; bottom: 9px; border-radius: 8px; background: var(--teal); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; overflow: hidden; box-shadow: 0 6px 14px -6px rgba(31,158,156,.6); }
+  .tl.tight .tl-clean { background: #c98a00; box-shadow: 0 6px 14px -6px rgba(201,138,0,.6); }
+  .tl.appr .tl-clean { background: var(--danger); }
+  .tl.done .tl-clean { background: var(--ok); }
+  .tl-mark { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--navy); }
+  .tl-labels { position: relative; height: 34px; margin-top: 6px; font-size: 12px; }
+  .tl-labels span { position: absolute; transform: translateX(-50%); text-align: center; white-space: nowrap; line-height: 1.25; color: var(--ink-3); }
+  .tl-labels span b { display: block; color: var(--ink); font-size: 12.5px; }
+  .tl-labels span.l { transform: none; text-align: left; }
+  .tl-labels span.r { transform: translateX(-100%); text-align: right; }
+  .callout { display: flex; gap: 12px; padding: 12px 14px; border-radius: 12px; font-size: 13.5px; line-height: 1.5; }
+  .callout .ic { margin-top: 2px; }
+  .callout.amber { background: var(--amber-soft); color: var(--amber-ink); }
+  .callout.rose { background: var(--rose-soft); color: var(--rose-ink); }
+  .callout.ok { background: var(--ok-soft); color: var(--ok-ink); }
+  .callout.teal { background: var(--teal-soft); color: #0f5e5c; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .fact { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+  .fact small { display: block; font-size: 11.5px; font-weight: 600; color: var(--ink-3); }
+  .fact b { display: block; font-size: 14px; font-weight: 600; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fact span { display: block; font-size: 12px; color: var(--ink-3); }
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .checklist li { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: start; padding: 10px 12px; background: #fff; font-size: 13.5px; }
+  .checklist li + li { border-top: 1px solid var(--line); }
+  .checklist .ck { width: 20px; height: 20px; border-radius: 6px; background: var(--teal-soft); color: #0f6664; display: grid; place-items: center; margin-top: 1px; }
+  .checklist b { font-weight: 600; display: block; }
+  .checklist span { color: var(--ink-3); font-size: 12.5px; }
+  .checklist em { font-style: normal; font-size: 12px; font-weight: 600; color: var(--ink-3); white-space: nowrap; }
+  .linens { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .linens div { background: var(--mist); border-radius: 10px; padding: 10px 12px; }
+  .linens b { display: block; font-family: var(--serif); font-size: 22px; font-weight: 500; line-height: 1.1; }
+  .linens span { font-size: 12px; color: var(--ink-3); }
+  .addons { display: grid; gap: 8px; }
+  .addon { display: grid; grid-template-columns: 36px 1fr auto auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .addon:hover { border-color: #c9d7d6; }
+  .addon.on { border-color: #9ed6d2; background: #f6fbfb; }
+  .addon .a-ico { width: 36px; height: 36px; border-radius: 10px; background: var(--mist); display: grid; place-items: center; color: var(--ink-2); }
+  .addon.on .a-ico { background: var(--teal-soft); color: #0f6664; }
+  .addon b { display: block; font-size: 14px; font-weight: 600; }
+  .addon span { font-size: 12.5px; color: var(--ink-3); }
+  .addon .price { font-weight: 700; font-size: 14px; color: var(--ink); }
+  .addon.locked { cursor: default; }
+  .addon.locked:hover { border-color: #9ed6d2; }
+  .addon input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .addon .box { width: 22px; height: 22px; border-radius: 7px; border: 2px solid #c9d1d2; display: grid; place-items: center; color: #fff; transition: background .15s, border-color .15s; }
+  .addon.on .box { background: var(--teal); border-color: var(--teal); }
+  .addon .box .ic { width: 14px; height: 14px; opacity: 0; }
+  .addon.on .box .ic { opacity: 1; }
+  .addon:focus-within { box-shadow: 0 0 0 3px var(--teal-soft); border-color: var(--teal); }
+  .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+  .slot { position: relative; }
+  .slot input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .slot label { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; font-size: 13.5px; color: var(--ink); margin: 0; }
+  .slot label small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; }
+  .slot input:checked + label { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); background: #f6fbfb; }
+  .slot input:focus-visible + label { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .resched-actions { margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .qa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .qa-grid figure { margin: 0; position: relative; border-radius: 10px; overflow: hidden; background: var(--paper-2); }
+  .qa-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .qa-grid figcaption { position: absolute; left: 6px; bottom: 6px; right: 6px; font-size: 11px; font-weight: 600; color: #fff; background: rgba(14,39,49,.66); border-radius: 6px; padding: 2px 6px; display: flex; justify-content: space-between; gap: 4px; }
+  .dr-foot { border-top: 1px solid var(--line); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px; background: #fff; }
+  .est small { display: block; font-size: 11.5px; color: var(--ink-3); font-weight: 600; }
+  .est b { font-family: var(--serif); font-size: 28px; font-weight: 500; line-height: 1.1; }
+  .est-lines { display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); }
+  .est-lines div { display: flex; justify-content: space-between; gap: 12px; }
+  .est-lines .tot { border-top: 1px dashed var(--line); padding-top: 6px; margin-top: 2px; font-weight: 700; color: var(--ink); }
+
+  /* ---------- Pricing ---------- */
+  .pricing { padding: clamp(48px, 7vw, 96px) 0; }
+  .tiers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .tier { padding: 22px; display: grid; gap: 6px; align-content: start; }
+  .tier small { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .tier .amt { font-family: var(--serif); font-size: 40px; line-height: 1.05; margin-top: 4px; }
+  .tier .amt sup { font-size: 18px; vertical-align: 16px; margin-right: 2px; color: var(--ink-2); }
+  .tier .amt span { font-family: var(--sans); font-size: 14px; color: var(--ink-3); font-weight: 500; }
+  .tier p { font-size: 14px; color: var(--ink-2); }
+  .tier.feat { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft), var(--shadow); position: relative; }
+  .tier .tag { position: absolute; top: 14px; right: 14px; }
+  .addon-strip { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; font-size: 14px; color: var(--ink-2); }
+  .addon-strip .chip { background: #fff; border: 1px solid var(--line); color: var(--ink-2); font-weight: 600; }
+  .illus { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--amber-ink); background: var(--amber-soft); padding: 4px 10px; border-radius: 6px; }
+
+  /* ---------- CTA ---------- */
+  .cta-band { padding: 0 0 clamp(56px, 8vw, 104px); }
+  .cta-inner { background: var(--navy); color: #fff; border-radius: var(--r-lg); padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; align-items: center; position: relative; overflow: hidden; }
+  .cta-inner::after { content: ""; position: absolute; right: -80px; top: -80px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(43,179,177,.28), transparent 70%); }
+  .cta-inner h2 { color: #fff; margin: 10px 0 12px; }
+  .cta-inner p { color: #b9cdd1; max-width: 48ch; }
+  .cta-inner .eyebrow { color: var(--teal-2); }
+  .cta-links { display: grid; gap: 12px; position: relative; z-index: 1; }
+  .cta-link { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); text-decoration: none; color: #fff; transition: background .2s, border-color .2s; }
+  .cta-link:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.25); }
+  .cta-link b { display: block; font-size: 16px; }
+  .cta-link span { display: block; font-size: 13.5px; color: #9fb7bc; }
+  .cta-link .go { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; flex: none; }
+
+  /* ---------- Toast ---------- */
+  .toasts { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 120; display: grid; gap: 8px; width: max-content; max-width: calc(100vw - 32px); pointer-events: none; }
+  .toast { display: flex; align-items: center; gap: 10px; background: var(--navy); color: #fff; padding: 12px 16px; border-radius: 12px; font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); animation: toastin .3s cubic-bezier(.2,.8,.2,1); }
+  .toast .tick { width: 20px; height: 20px; border-radius: 50%; background: var(--teal); display: grid; place-items: center; flex: none; }
+  .toast.out { opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .25s; }
+  @keyframes toastin { from { opacity: 0; transform: translateY(10px); } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .row { grid-template-columns: 58px minmax(0, 1fr) 132px 180px; }
+    .row .crew { display: none; }
+    .row-guests .crew-inline { display: inline; }
+  }
+  .crew-inline { display: none; }
+  @media (max-width: 1024px) {
+    .main-grid { grid-template-columns: minmax(0, 1fr); }
+    .rail { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .t-hero .wrap { grid-template-columns: minmax(0, 1fr); }
+    .hero-feed { max-width: 520px; }
+    .tiers { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr; }
+    .props { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(250px, 78%); overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 2px 6px; margin: -2px; scrollbar-width: none; }
+    .props::-webkit-scrollbar { display: none; }
+    .prop { scroll-snap-align: start; }
+    .row { grid-template-columns: 52px minmax(0, 1fr); grid-template-areas: "d m" "d s" "a a"; gap: 8px 14px; }
+    .row-date { grid-area: d; align-self: start; }
+    .row-main { grid-area: m; }
+    .row-status { grid-area: s; }
+    .row-actions { grid-area: a; justify-content: stretch; }
+    .row-actions .btn { flex: 1; }
+    .cta-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .cal-dow, .cal-weeks { display: none; }
+    .agenda { display: block; }
+    .legend { gap: 8px 12px; }
+    .rail { grid-template-columns: minmax(0, 1fr); }
+    .app-url { display: none; }
+    .app-chrome { justify-content: space-between; }
+    .app-body { padding: 14px; gap: 14px; }
+    .connect { grid-template-columns: 1fr; padding: 14px; }
+    .sync-btn { width: 100%; }
+    .peak { flex-wrap: wrap; padding: 14px; gap: 12px; align-items: flex-start; }
+    .peak-txt { flex-basis: calc(100% - 56px); }
+    .peak .sw { margin-left: 52px; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .hero-stats li { padding: 12px; flex-direction: row; }
+    .feed-card:nth-child(n) { margin: 0; }
+    .cal-month { min-width: 0; font-size: 18px; }
+    .panel-head { padding: 12px 14px; }
+    .tiers { grid-template-columns: 1fr; }
+    .drawer { top: auto; height: 92vh; height: 92dvh; width: 100%; border-radius: 20px 20px 0 0; transform: translateY(104%); }
+    .drawer.show { transform: none; }
+    .dr-head, .dr-body, .dr-foot { padding-left: 16px; padding-right: 16px; }
+    .dr-head h3 { font-size: 22px; }
+    .linens { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .sec-head { margin-bottom: 24px; }
+    .list-tools { width: 100%; }
+    .list-tools .seg { flex: 1; }
+    .list-tools .seg button { flex: 1; padding: 0 8px; }
+  }
+  @media (max-width: 400px) {
+    .t-hero h1 { font-size: 36px; }
+    .feed-card { grid-template-columns: 34px 1fr; }
+    .feed-time { display: none; }
+    .props { grid-auto-columns: 86%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cal-grid.fresh .bar, .cal-grid.fresh .cal-turn, .agenda.fresh .ag-day { animation: none; }
+    .drawer, .scrim { transition: none; }
+    .pulse { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-flag"><b>Concept demo</b> · sample data, nothing is booked or sent</div>
+<header class="site-header"><div class="wrap">
+  <a class="logo" href="index.html"><img src="assets/BerkshireCustomCleaning-2.png" alt="Berkshire Custom Cleaning"><span class="tag">Tailored to You</span></a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <nav class="nav"><a href="index.html">Home</a><a href="index.html#services">Services</a><a href="turnover.html" aria-current="page">Turnover Portal</a><a href="estate.html">Estate Care</a><a href="index.html#reviews">Reviews</a><a class="btn btn-primary btn-sm" href="turnover.html">Book a Clean</a></nav>
+</div></header>
+
+<main id="main">
+  <!-- 1. Hero -->
+  <section class="t-hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">For Airbnb &amp; VRBO hosts</span>
+        <h1>Every checkout, <em>cleaned</em> before the next check-in.</h1>
+        <p class="lede">Connect your rental calendar once. Every time a guest books, we hold a crew for the gap between checkout and the next arrival. No phone tag, even on the busiest leaf-peeping and ski weekends.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#portal">Try the portal <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+        <ul class="hero-stats">
+          <li><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><b>Auto-scheduled from your calendar</b><span>Airbnb, VRBO, Booking.com &amp; Google</span></div></li>
+          <li><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span><div><b>Guaranteed turnover window</b><span>A crew held for every checkout</span></div></li>
+          <li><span class="ic-wrap"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span><div><b>Photo-verified QA report</b><span>Room-by-room, after every clean</span></div></li>
+        </ul>
+      </div>
+      <div class="hero-feed" aria-label="Example portal notifications">
+        <div class="feed-head"><span class="pulse"></span> Live from the portal · sample</div>
+        <div class="feed-card">
+          <span class="feed-ico" style="background:var(--teal-soft);color:#0f6664"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>
+          <div><b>Calendar synced</b><p id="feed1">9 stays imported from Airbnb · Lakeside Cabin</p></div>
+          <span class="feed-time">2m ago</span>
+        </div>
+        <div class="feed-card">
+          <span class="feed-ico" style="background:var(--amber-soft);color:var(--amber-ink)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+          <div><b>Same-day turnover held</b><p id="feed2">Lakeside Cabin · Checkout 11:00 → Check-in 16:00 · Jenipher + 2</p></div>
+          <span class="feed-time">2m ago</span>
+        </div>
+        <div class="feed-card">
+          <span class="feed-ico" style="background:var(--ok-soft);color:var(--ok-ink)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <div><b>QA report ready</b><p id="feed3">Ski Chalet · 28 photos · 32 of 32 checks passed</p></div>
+          <span class="feed-time" id="feed3-t">Yesterday</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. How it works -->
+  <section class="how" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="eyebrow">How it works</span><h2>Three steps, then it runs itself.</h2></div>
+        <p class="lede">You keep taking bookings the way you do now. The portal watches your calendar and books the clean.</p>
+      </div>
+      <ol class="steps">
+        <li class="card step reveal">
+          <span class="step-n"><i>1</i> Connect</span>
+          <h3>Paste your calendar link</h3>
+          <p>Copy the iCal export link from Airbnb, VRBO, Booking.com or Google Calendar. One link per property, and you never touch it again.</p>
+          <div class="step-vis"><div class="mini">
+            <div class="mini-input"><svg class="ic ic-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>airbnb.com/calendar/ical/123456.ics</div>
+            <div class="mini-plats"><span style="--c:#ff5a5f">Airbnb</span><span style="--c:#245abc">VRBO</span><span style="--c:#003b95">Booking.com</span><span style="--c:#1a73e8">Google</span></div>
+          </div></div>
+        </li>
+        <li class="card step reveal">
+          <span class="step-n"><i>2</i> Auto-book</span>
+          <h3>Turnovers book themselves</h3>
+          <p>Each checkout gets a crew booked into the gap before the next check-in. Same-day flips get flagged early so nothing is left to chance.</p>
+          <div class="step-vis"><div class="mini">
+            <div class="mini-tl"><span class="g1"></span><span class="cl">Clean · 3h</span><span class="g2"></span></div>
+            <div class="mini-tl-l"><span>Checkout 11:00</span><span>Check-in 16:00</span></div>
+          </div></div>
+        </li>
+        <li class="card step reveal">
+          <span class="step-n"><i>3</i> Verify</span>
+          <h3>Get a photo QA report</h3>
+          <p>When the crew finishes, you get room-by-room photos, the full checklist and a note on anything guests left behind or broke.</p>
+          <div class="step-vis"><div class="mini">
+            <div class="mini-photos"><img src="assets/Kitchen Interior with Island.jpg" alt=""><img src="assets/Living Room.jpeg" alt=""><img src="assets/Interior Design.jpg" alt=""><img src="assets/Wooden Floor.jpg" alt=""></div>
+            <div class="mini-qa"><span>32 / 32 checks</span><span>Done 14:06</span></div>
+          </div></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3. Portal -->
+  <section class="portal-sec" id="portal" aria-labelledby="portal-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="eyebrow">Interactive demo</span><h2 id="portal-h">Your turnover portal</h2></div>
+        <p class="lede">Switch properties, re-sync a calendar and open any turnover to confirm it. Everything here runs on sample data in your browser.</p>
+      </div>
+
+      <div class="app" id="app">
+        <div class="app-chrome">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="app-url"><svg class="ic ic-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>portal.berkshirecustomcleaning.com/turnovers</div>
+          <div class="app-user"><span class="av" aria-hidden="true">LM</span><span>Lauren M. · Host</span></div>
+        </div>
+        <div class="app-body">
+          <div class="props" id="props" role="tablist" aria-label="Your properties"></div>
+
+          <div class="connect" id="connect">
+            <div class="connect-top">
+              <div class="connect-title"><span class="badge-step">Step 1</span> Connect calendar</div>
+              <div class="plats" id="plats" role="group" aria-label="Calendar source"></div>
+            </div>
+            <div class="field">
+              <label for="ical">iCal export link for <span id="ical-prop">Lakeside Cabin</span></label>
+              <div class="input-ic">
+                <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <input id="ical" type="url" inputmode="url" autocomplete="off" spellcheck="false" aria-describedby="ical-help">
+              </div>
+              <p class="field-help" id="ical-help">Airbnb: Calendar → Availability → Connect calendars → Export calendar.</p>
+            </div>
+            <button class="btn btn-dark sync-btn" id="sync-btn" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg><span>Sync calendar</span></button>
+            <ol class="sync-log" id="sync-log" hidden aria-live="polite"></ol>
+            <div class="sync-status" id="sync-status" aria-live="polite"></div>
+            <details class="ics"><summary>Preview the raw .ics feed</summary><pre id="ics-raw" tabindex="0"></pre></details>
+          </div>
+
+          <div class="peak" id="peak">
+            <span class="peak-ico" id="peak-ico"></span>
+            <div class="peak-txt">
+              <span class="peak-season" id="peak-season">Leaf-peeping season</span>
+              <b>Peak season: lock in your turnover windows</b>
+              <p id="peak-msg">Fall foliage weekends book our crews three weeks out.</p>
+            </div>
+            <button class="sw" id="peak-sw" type="button" role="switch" aria-checked="false"><span class="track"></span>Auto-confirm all</button>
+          </div>
+
+          <div class="main-grid">
+            <div class="panel" id="cal-panel">
+              <div class="panel-head">
+                <h3><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="cal-title">Lakeside Cabin</span></h3>
+                <div class="cal-nav">
+                  <button class="pill-btn" id="cal-today" type="button">Today</button>
+                  <button class="icon-btn" id="cal-prev" type="button" aria-label="Previous month"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                  <span class="cal-month" id="cal-month" aria-live="polite">October 2026</span>
+                  <button class="icon-btn" id="cal-next" type="button" aria-label="Next month"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+                </div>
+              </div>
+              <div class="legend" aria-label="Legend">
+                <span><i class="lg-stay"></i>Guest stay</span>
+                <span><i class="lg-auto"></i>Auto-booked</span>
+                <span><i class="lg-same"></i>Same-day</span>
+                <span><i class="lg-appr"></i>Needs approval</span>
+                <span><i class="lg-conf"></i>Confirmed</span>
+              </div>
+              <div class="cal-grid" id="cal-grid">
+                <div class="cal-dow" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+                <div class="cal-weeks" id="cal-weeks"></div>
+              </div>
+              <ol class="agenda" id="agenda" aria-label="Month agenda"></ol>
+            </div>
+
+            <aside class="rail" aria-label="Property summary and settings">
+              <div class="kpis" id="kpis"></div>
+              <div class="panel">
+                <div class="panel-head"><h3><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Settings</h3><span class="muted" style="font-size:12.5px" id="set-prop">Lakeside Cabin</span></div>
+                <div class="settings">
+                  <div class="set-row"><label class="lbl" for="set-out">Default checkout</label><select id="set-out"><option>10:00</option><option>11:00</option><option>12:00</option></select></div>
+                  <div class="set-row"><label class="lbl" for="set-in">Default check-in</label><select id="set-in"><option>15:00</option><option>16:00</option><option>17:00</option></select></div>
+                  <div class="set-row"><span class="lbl" id="lbl-auto"><span>Auto-confirm turnovers<small>Skips the Confirm step</small></span></span><button class="sw" id="set-auto" type="button" role="switch" aria-checked="false" aria-labelledby="lbl-auto"><span class="track"></span>Auto-confirm</button></div>
+                  <div class="set-row"><span class="lbl" id="lbl-sms"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Notify by SMS</span><button class="sw" id="set-sms" type="button" role="switch" aria-checked="true" aria-labelledby="lbl-sms"><span class="track"></span>SMS</button></div>
+                  <div class="set-row"><span class="lbl" id="lbl-email"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>Notify by email</span><button class="sw" id="set-email" type="button" role="switch" aria-checked="true" aria-labelledby="lbl-email"><span class="track"></span>Email</button></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <div class="panel" id="list-panel">
+            <div class="panel-head">
+              <h3><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>Turnovers</h3>
+              <div class="list-tools">
+                <div class="seg" role="tablist" aria-label="Turnover timeframe" id="tab-seg">
+                  <button type="button" role="tab" aria-selected="true" data-tab="upcoming">Upcoming <span class="n" id="n-up">0</span></button>
+                  <button type="button" role="tab" aria-selected="false" data-tab="completed">Completed <span class="n" id="n-done">0</span></button>
+                </div>
+                <div class="seg" role="group" aria-label="Which properties" id="scope-seg">
+                  <button type="button" aria-pressed="true" data-scope="all">All properties</button>
+                  <button type="button" aria-pressed="false" data-scope="one">This property</button>
+                </div>
+              </div>
+            </div>
+            <ul class="rows" id="rows" aria-label="Turnovers"></ul>
+            <button type="button" class="rows-more" id="rows-more" hidden>Show all</button>
+            <div class="list-foot"><svg class="ic ic-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Crew start times sit 15 minutes after checkout. Same-day flips get a priority crew automatically.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Pricing -->
+  <section class="pricing" id="pricing" aria-labelledby="pricing-h">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="eyebrow">Turnover pricing</span><h2 id="pricing-h">Priced by the size of the house.</h2></div>
+        <div><span class="illus"><svg class="ic ic-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>Illustrative pricing</span><p class="lede" style="margin-top:10px">Example numbers for the demo. Real quotes come after a walkthrough of your property.</p></div>
+      </div>
+      <div class="tiers">
+        <div class="card tier reveal"><small>Studio – 2 BR</small><div class="amt"><sup>$</sup>145 <span>/ turnover</span></div><p>Condos and cottages. Usually 2 hours with a crew of two.</p></div>
+        <div class="card tier feat reveal"><span class="chip tag">Most hosts</span><small>3 BR</small><div class="amt"><sup>$</sup>185 <span>/ turnover</span></div><p>Lake cabins and village homes. About 3 hours with a crew of three.</p></div>
+        <div class="card tier reveal"><small>4 BR</small><div class="amt"><sup>$</sup>235 <span>/ turnover</span></div><p>Family houses that sleep up to 8. About 3½ hours.</p></div>
+        <div class="card tier reveal"><small>5+ BR</small><div class="amt"><sup>$</sup>295 <span>/ turnover</span></div><p>Ski chalets and big group houses. Crew of four on same-day flips.</p></div>
+      </div>
+      <div class="addon-strip reveal"><b>Add-ons:</b><span class="chip">Laundry &amp; linens +$45–75</span><span class="chip">Restock consumables +$25</span><span class="chip">Hot tub service +$45</span><span class="chip">Firewood restock +$30</span><span class="chip">Same-day priority +$35</span></div>
+    </div>
+  </section>
+
+  <!-- 5. CTA -->
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="cta-inner reveal">
+        <div>
+          <span class="eyebrow">Next step</span>
+          <h2>Bring your calendar. We'll handle the gaps.</h2>
+          <p>We'll set up your properties, walk each home with you and build the checklist your guests will notice. Not renting it out? Estate Care keeps an empty house looked after between your visits.</p>
+        </div>
+        <div class="cta-links">
+          <a class="cta-link" href="index.html#contact"><div><b>Talk to our team</b><span>Get a turnover quote for your property</span></div><span class="go"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
+          <a class="cta-link" href="estate.html"><div><b>Explore Estate Care &amp; QA</b><span>Check-ins and photo reports for second homes</span></div><span class="go"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <img src="assets/BerkshireCustomCleaning-2.png" alt="Berkshire Custom Cleaning" style="height:44px;width:auto;background:#fff;border-radius:10px;padding:6px 10px;margin-bottom:16px">
+        <p>Woman-owned · Equal Opportunity Employer · Serving Pittsfield &amp; the Berkshires</p>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="index.html#services">Residential cleaning</a></li><li><a href="index.html#services">Commercial cleaning</a></li><li><a href="index.html#services">Move-in / move-out</a></li><li><a href="turnover.html">Vacation rental turnovers</a></li></ul></div>
+      <div><h4>Concepts</h4><ul><li><a href="turnover.html">Turnover Portal</a></li><li><a href="estate.html">Estate Care &amp; QA</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+14137709219">1-413-770-9219</a></li><li><a href="mailto:Berkshirecustomcleaning@gmail.com">Berkshirecustomcleaning@gmail.com</a></li><li>Pittsfield, MA</li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 Berkshire Custom Cleaning®</span><span>Concept redesign — demo</span></div>
+  </div>
+</footer>
+
+<!-- Turnover drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-title" hidden>
+  <div class="dr-head">
+    <div class="dr-top"><span id="dr-chip"></span><button class="icon-btn" id="dr-close" type="button" aria-label="Close details"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <h3 id="dr-title">Turnover</h3>
+    <p class="dr-sub" id="dr-sub"></p>
+  </div>
+  <div class="dr-body" id="dr-body"></div>
+  <div class="dr-foot" id="dr-foot"></div>
+</aside>
+
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+  // Shared chrome: nav toggle, header shadow, reveal-on-scroll
+  (function () {
+    var header = document.querySelector('.site-header');
+    var toggle = document.querySelector('.nav-toggle');
+    var nav = document.querySelector('.nav');
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 8); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    } else { els.forEach(function (el) { el.classList.add('in'); }); }
+  })();
+</script>
+<!-- ical.js parses the feed when available; turnover.js falls back to a built-in parser offline -->
+<script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js" async></script>
+<script src="js/turnover.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berkshire Custom Cleaning | Trusted Cleaners in Pittsfield &amp; the Berkshires</title>
+<meta name="description" content="Woman-owned cleaning company serving Pittsfield and all of Berkshire County for 20+ years. Residential, commercial, Airbnb turnovers, pressure washing and estate care.">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="css/bcc.css">
+<!-- Fraunces italic for headline accents (roman cut comes from bcc.css) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap">
+<style>
+  /* ============ page: home ============ */
+  section[id] { scroll-margin-top: 88px; }
+  .i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  h1 em, h2 em { font-style: italic; font-weight: 400; color: var(--teal); }
+  .reveal { transition-delay: var(--d, 0s); }
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  /* Header fixes local to this page (see report): logo PNG ships with a white box + its own tagline;
+     .nav a outranks .btn-primary so the CTA text went teal-on-teal. */
+  .logo img { mix-blend-mode: multiply; }
+  .logo .tag { display: none; }
+  .nav a.btn-primary, .nav a.btn-primary:hover { color: #fff; }
+  .site-footer a { overflow-wrap: anywhere; }
+  .site-footer .brand-name { font-family: var(--serif); font-size: 24px; color: #fff; margin: 0 0 12px; line-height: 1.2; }
+  .site-footer .cols p { max-width: 34ch; }
+  .site-footer a:hover { color: var(--teal-2); }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: clip; padding: clamp(40px, 7vw, 96px) 0 clamp(56px, 7vw, 88px); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px 64px; align-items: end; }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 24px; }
+  .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px var(--teal-soft); }
+  .hero h1 { font-size: clamp(44px, 6.6vw, 92px); line-height: 1.0; letter-spacing: -.025em; font-variation-settings: "opsz" 144; }
+  .hero h1 em { display: inline-block; padding-right: .04em; }
+  .hero-side { display: grid; gap: 24px; padding-bottom: 8px; }
+  .hero-side .lede { font-size: 19px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn-lg { height: 54px; padding: 0 28px; font-size: 16px; }
+  .btn .i { width: 18px; height: 18px; }
+  .btn-primary { box-shadow: 0 8px 20px -10px rgba(31,158,156,.7); }
+
+  .rating-pill { display: inline-flex; align-items: center; gap: 10px; align-self: start; justify-self: start; padding: 8px 16px 8px 8px; border-radius: 999px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); text-decoration: none; font-size: 14px; color: var(--ink-2); transition: border-color .2s, transform .2s; }
+  .rating-pill:hover { border-color: var(--teal); transform: translateY(-1px); }
+  .rating-pill .g { width: 32px; height: 32px; border-radius: 50%; background: var(--paper); display: grid; place-items: center; }
+  .rating-pill .g svg { width: 18px; height: 18px; }
+  .rating-pill b { color: var(--ink); font-size: 15px; }
+  .rating-pill .sep { width: 1px; height: 16px; background: var(--line); }
+
+  .hero-media { position: relative; margin: clamp(40px, 6vw, 72px) 0 0; border-radius: 28px; overflow: hidden; background: var(--navy); aspect-ratio: 1536 / 454; box-shadow: var(--shadow-lg); }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+    background: radial-gradient(120% 140% at 50% 30%, transparent 55%, rgba(8,26,33,.55) 100%), linear-gradient(180deg, transparent 70%, rgba(8,26,33,.35)); }
+
+  .trust { list-style: none; margin: 24px 0 0; padding: 8px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+  .trust li { display: flex; align-items: center; gap: 16px; padding: 16px 20px; position: relative; }
+  .trust li + li::before { content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 1px; background: var(--line); }
+  .trust .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--teal-soft); color: #137472; flex: none; }
+  .trust b { display: block; font-size: 15px; line-height: 1.3; }
+  .trust span { display: block; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+
+  /* ---------- Section heads ---------- */
+  .head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+  .head .eyebrow { margin-bottom: 16px; }
+  .head-side { display: grid; gap: 24px; justify-items: start; }
+
+  /* ---------- Services ---------- */
+  .services { background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%); }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .svc { display: flex; flex-direction: column; overflow: hidden; transition: transform .3s ease, box-shadow .3s ease; }
+  .svc:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .svc-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper-2); }
+  .svc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
+  .svc:hover .svc-media img { transform: scale(1.04); }
+  .svc-icon { position: absolute; left: 20px; bottom: -22px; width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: #fff; color: var(--teal); box-shadow: var(--shadow); z-index: 1; }
+  .svc-icon .i { width: 24px; height: 24px; }
+  .svc-media-wrap { position: relative; }
+  .svc-body { display: flex; flex-direction: column; gap: 16px; padding: 40px 28px 28px; flex: 1; }
+  .svc-body p { color: var(--ink-2); font-size: 15.5px; }
+  .opts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts .chip { background: var(--paper); color: var(--ink-2); border: 1px solid var(--line); font-weight: 500; }
+  .svc-link { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #137472; text-decoration: none; align-self: flex-start; }
+  .svc-link .i { width: 18px; height: 18px; transition: transform .2s; }
+  .svc-link:hover .i, .svc:hover .svc-link .i { transform: translateX(4px); }
+
+  .estate { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); overflow: hidden; border-radius: var(--r-lg); background: linear-gradient(140deg, #24493f 0%, #183630 55%, #12292b 100%); color: #e6efec; box-shadow: var(--shadow-lg); margin-top: 8px; }
+  .estate-media { position: relative; min-height: 360px; }
+  .estate-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .estate-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(24,54,48,.6)); }
+  .estate-body { padding: clamp(32px, 4vw, 56px); display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+  .estate .chip { background: rgba(43,179,177,.18); color: #7fe0dd; align-self: flex-start; }
+  .estate h3 { font-size: clamp(28px, 3vw, 38px); color: #fff; }
+  .estate p { color: #c4d6d1; font-size: 16.5px; max-width: 48ch; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 15.5px; }
+  .checks .tick { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgba(43,179,177,.2); color: #7fe0dd; flex: none; }
+  .checks .tick .i { width: 14px; height: 14px; stroke-width: 2.5; }
+  .estate .ctas { margin-top: 8px; }
+  .btn-outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
+  .btn-outline-light:hover { background: #fff; color: var(--navy); border-color: #fff; }
+
+  /* ---------- Concepts band ---------- */
+  .concepts { position: relative; background: var(--navy); color: #c6d5d9; overflow: clip; }
+  .concepts::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(600px 380px at 85% 0%, rgba(43,179,177,.22), transparent 70%), radial-gradient(520px 360px at 0% 100%, rgba(47,93,80,.45), transparent 70%); }
+  .concepts .wrap { position: relative; }
+  .concepts h2 { color: #fff; }
+  .concepts h2 em { color: var(--teal-2); }
+  .concepts .eyebrow { color: var(--teal-2); display: inline-flex; align-items: center; gap: 10px; }
+  .concepts .eyebrow .new { background: var(--teal-2); color: var(--navy); border-radius: 999px; padding: 3px 10px; letter-spacing: .08em; font-size: 11px; }
+  .concepts .lede { color: #a9bec4; }
+  .feat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .feat { display: flex; flex-direction: column; border-radius: var(--r-lg); background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.09); overflow: hidden; transition: border-color .3s, transform .3s, background .3s; text-decoration: none; color: inherit; }
+  .feat:hover { border-color: rgba(43,179,177,.55); transform: translateY(-4px); background: rgba(255,255,255,.055); }
+  .feat-body { padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .feat-kicker { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-2); display: flex; align-items: center; gap: 8px; }
+  .feat-kicker .i { width: 16px; height: 16px; }
+  .feat h3 { color: #fff; font-size: 23px; }
+  .feat p { font-size: 15px; color: #a9bec4; }
+  .feat .go { margin-top: auto; padding-top: 8px; display: inline-flex; gap: 8px; align-items: center; color: #fff; font-weight: 600; font-size: 15px; }
+  .feat .go .i { width: 18px; height: 18px; transition: transform .2s; color: var(--teal-2); }
+  .feat:hover .go .i { transform: translateX(4px); }
+
+  /* mock UIs */
+  .mock { margin: 8px 8px 0; padding: 18px; border-radius: 16px 16px 12px 12px; background: linear-gradient(180deg, #17404c, #12333d); border: 1px solid rgba(255,255,255,.08); font-size: 12.5px; color: #cfe0e3; min-height: 276px; display: flex; flex-direction: column; gap: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+  .mock-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 600; color: #fff; font-size: 13px; }
+  .live { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 11.5px; color: #7fe0dd; background: rgba(43,179,177,.14); padding: 3px 9px; border-radius: 999px; }
+  .live::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #45d1ce; box-shadow: 0 0 0 3px rgba(69,209,206,.25); }
+  .week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; }
+  .week span { display: grid; gap: 2px; padding: 7px 0; border-radius: 8px; background: rgba(255,255,255,.04); font-size: 11px; color: #8fa8ae; }
+  .week b { font-size: 13px; color: #e8f1f2; font-weight: 600; }
+  .week .out { background: var(--teal); color: #e6fbfa; }
+  .week .out b { color: #fff; }
+  .slot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 11px; border-radius: 10px; background: rgba(255,255,255,.05); }
+  .slot small { display: block; color: #8fa8ae; font-size: 11px; }
+  .pill-ok { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 999px; background: rgba(46,139,87,.22); color: #8fe3b4; font-weight: 600; font-size: 11px; white-space: nowrap; }
+  .pill-ok .i { width: 12px; height: 12px; stroke-width: 3; }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+  .opt .radio { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid #6d8a91; flex: none; }
+  .opt.on { border-color: rgba(43,179,177,.7); background: rgba(43,179,177,.12); color: #fff; }
+  .opt.on .radio { border: 4px solid var(--teal-2); }
+  .opt small { margin-left: auto; color: #8fa8ae; font-size: 11px; white-space: nowrap; }
+  .addons { display: flex; flex-wrap: wrap; gap: 6px; }
+  .addons span { padding: 3px 9px; border-radius: 999px; border: 1px dashed rgba(255,255,255,.22); font-size: 11px; color: #a9bec4; }
+  .addons span.on { border-style: solid; border-color: rgba(43,179,177,.6); color: #7fe0dd; }
+  .qa-row { display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .qa-row .i { width: 16px; height: 16px; color: #8fe3b4; stroke-width: 2.5; }
+  .qa-row small { color: #8fa8ae; font-size: 11px; }
+  .thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .thumbs span { height: 40px; border-radius: 8px; background: linear-gradient(135deg, #2a5f67, #193f48); }
+  .thumbs span:nth-child(2) { background: linear-gradient(135deg, #3c6f62, #22463e); }
+  .thumbs span:nth-child(3) { background: linear-gradient(135deg, #5b6f78, #2b3f47); }
+  .thumbs span:nth-child(4) { background: linear-gradient(135deg, #2b7c7a, #1a4f55); }
+  .sent { display: flex; align-items: center; gap: 8px; color: #a9bec4; font-size: 11.5px; margin-top: auto; }
+  .sent .i { width: 14px; height: 14px; color: #7fe0dd; }
+
+  /* ---------- Reviews ---------- */
+  .reviews { background: var(--paper-2); }
+  .rv-layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 32px; align-items: start; }
+  .rv-summary { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+  .rv-sum-top { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink-2); font-size: 15px; }
+  .rv-g { display: inline-grid; place-items: center; width: 20px; height: 20px; flex: none; }
+  .rv-g svg { width: 100%; height: 100%; }
+  .rv-g-lg { width: 28px; height: 28px; }
+  .rv-score { display: flex; align-items: baseline; gap: 8px; }
+  .rv-num { font-family: var(--serif); font-size: 88px; line-height: .9; letter-spacing: -.03em; font-variation-settings: "opsz" 144; color: var(--ink); }
+  .rv-outof { font-size: 18px; color: var(--ink-3); font-weight: 500; }
+  .rv-based { color: var(--ink-2); font-size: 15px; }
+  .rv-actions { display: grid; gap: 10px; margin-top: 8px; }
+  .rv-actions .btn { width: 100%; }
+  .rv-actions .btn svg { flex: none; }
+  .rv-sync { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); padding-top: 16px; border-top: 1px solid var(--line); }
+  .rv-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(46,139,87,.18); flex: none; }
+
+  .rv-stars { display: inline-flex; gap: 2px; line-height: 0; }
+  .rv-star { position: relative; width: var(--size); height: var(--size); display: inline-block; }
+  .rv-star svg { width: var(--size); height: var(--size); display: block; }
+  .rv-star .bg { fill: #e3ded3; }
+  .rv-star .fg { position: absolute; inset: 0 auto 0 0; overflow: hidden; }
+  .rv-star .fg svg { fill: var(--gold); }
+
+  .rv-layout { align-items: stretch; }
+  .rv-summary { align-self: start; }
+  .rv-carousel { min-width: 0; display: flex; flex-direction: column; }
+  .rv-carousel .rv-controls { margin-top: auto; padding-top: 24px; }
+  .rv-track { list-style: none; margin: -8px -6px -24px; padding: 8px 6px 24px; display: grid; grid-auto-flow: column; grid-auto-columns: max(280px, calc((100% - 24px) / 2)); gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 6px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .rv-track::-webkit-scrollbar { display: none; }
+  .rv-track:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: var(--r-lg); }
+  .rv-card { scroll-snap-align: start; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .rv-head { display: flex; align-items: center; gap: 12px; }
+  .rv-avatar { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px; letter-spacing: .02em; flex: none; object-fit: cover; }
+  .rv-who { display: grid; min-width: 0; flex: 1; }
+  .rv-name { font-weight: 700; font-size: 15.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rv-name a { text-decoration: none; }
+  .rv-when { font-size: 13px; color: var(--ink-3); }
+  .rv-text { color: var(--ink-2); font-size: 15.5px; line-height: 1.6; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; line-clamp: 5; overflow: hidden; }
+  .rv-card.is-open .rv-text { display: block; -webkit-line-clamp: unset; line-clamp: none; overflow: visible; }
+  .rv-more { align-self: flex-start; margin-top: -4px; padding: 4px 0; border: 0; background: none; font: 600 14px var(--sans); color: #137472; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .rv-more[hidden] { display: none; }
+  .rv-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 24px; }
+  .rv-status { font-size: 14px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .rv-btns { display: flex; gap: 8px; }
+  .rv-nav { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line); color: var(--ink); cursor: pointer; transition: background .2s, color .2s, border-color .2s, opacity .2s; }
+  .rv-nav:hover:not(:disabled) { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .rv-nav:disabled { opacity: .4; cursor: default; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(40px, 6vw, 80px); align-items: start; }
+  .contact-info { display: grid; gap: 24px; }
+  .contact-info .lede { margin-top: 4px; }
+  .reach { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .reach a { display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: var(--r-lg); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); text-decoration: none; transition: border-color .2s, transform .2s, box-shadow .2s; min-width: 0; }
+  .reach a:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .reach .ic { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; background: var(--teal); color: #fff; }
+  .reach .ic .i { width: 22px; height: 22px; }
+  .reach small { display: block; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  .reach strong { display: block; font-size: 19px; font-weight: 600; color: var(--ink); line-height: 1.3; overflow-wrap: anywhere; }
+  .reach .email strong { font-size: 16.5px; }
+  .area { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 16 / 9; background: #6b4a2a; box-shadow: var(--shadow); margin: 0; }
+  .area img { width: 100%; height: 100%; object-fit: cover; }
+  .area figcaption { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 14px; background: rgba(14,39,49,.72); backdrop-filter: blur(10px); color: #e6eff1; font-size: 14.5px; line-height: 1.45; }
+  .area figcaption .i { color: var(--teal-2); width: 22px; height: 22px; }
+  .area figcaption b { color: #fff; }
+
+  .quote { padding: clamp(24px, 4vw, 44px); }
+  .quote h3 { font-size: 30px; margin-bottom: 8px; }
+  #quote-form-wrap > p { color: var(--ink-2); margin-bottom: 28px; }
+  .contact-info h2 { margin-bottom: 16px; }
+  .form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 16px; }
+  .field { display: grid; gap: 8px; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  .field .opt-tag { font-weight: 500; color: var(--ink-3); }
+  .form input, .form select, .form textarea { height: 50px; border-radius: 12px; padding: 0 16px; background: var(--paper); border-color: var(--line); transition: border-color .2s, box-shadow .2s, background .2s; }
+  .form input:focus, .form select:focus, .form textarea:focus { background: #fff; }
+  .form textarea { height: auto; min-height: 120px; padding: 14px 16px; resize: vertical; }
+  .form select { appearance: none; -webkit-appearance: none; padding-right: 44px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2344565c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .form input:user-invalid, .form select:user-invalid { border-color: var(--danger); }
+  .form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 4px; }
+  .form-foot .btn { min-width: 180px; }
+  .form-note { font-size: 13px; color: var(--ink-3); max-width: 26ch; }
+  .success { display: grid; gap: 16px; justify-items: start; padding: 8px 0; }
+  .success[hidden] { display: none; }
+  .success .ok { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: #e3f3ea; color: var(--ok); }
+  .success .ok .i { width: 30px; height: 30px; stroke-width: 2.5; }
+  .success h3 { font-size: 30px; }
+  .success p { color: var(--ink-2); }
+  .success:focus { outline: none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px) {
+    .svc-grid, .feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .feat-grid .feat:last-child { grid-column: 1 / -1; }
+    .trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .trust li:nth-child(3)::before { display: none; }
+    .trust li:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .rv-layout { grid-template-columns: 300px minmax(0, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero-grid, .head, .contact-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero-side { padding-bottom: 0; }
+    .estate { grid-template-columns: minmax(0, 1fr); }
+    .estate-media { min-height: 0; aspect-ratio: 16 / 9; }
+    .estate-media::after { background: linear-gradient(180deg, transparent 60%, rgba(24,54,48,.6)); }
+    .rv-layout { grid-template-columns: minmax(0, 1fr); }
+    .rv-summary { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px 24px; }
+    .rv-summary .rv-sum-top, .rv-summary .rv-based, .rv-summary .rv-actions, .rv-summary .rv-sync { grid-column: 1 / -1; }
+    .rv-actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  @media (max-width: 680px) {
+    .svc-grid, .feat-grid { grid-template-columns: minmax(0, 1fr); }
+    .feat-grid .feat:last-child { grid-column: auto; }
+    .hero-media { aspect-ratio: 2.5 / 1; border-radius: 20px; }
+    .trust { grid-template-columns: minmax(0, 1fr); padding: 4px 8px; }
+    .trust li { padding: 14px 8px; }
+    .trust li + li::before { display: none; }
+    .trust li + li { border-top: 1px solid var(--line); }
+    .rv-track { grid-auto-columns: 86%; gap: 16px; }
+    .rv-actions { grid-template-columns: minmax(0, 1fr); }
+    .rv-num { font-size: 72px; }
+    .reach { grid-template-columns: minmax(0, 1fr); }
+    .reach a { flex-direction: row; align-items: center; padding: 18px; }
+    .form { grid-template-columns: minmax(0, 1fr); }
+    .form-foot .btn { width: 100%; }
+    .area { aspect-ratio: 4 / 3; }
+    .site-footer .cols { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  }
+  @media (max-width: 400px) {
+    .ctas .btn { flex: 1 1 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .svc, .svc-media img, .feat, .reach a, .rating-pill { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- icon sprite (Lucide-derived, inline) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-drops" viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+  <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+</svg>
+
+<header class="site-header"><div class="wrap">
+  <a class="logo" href="index.html"><img src="assets/BerkshireCustomCleaning-2.png" alt="Berkshire Custom Cleaning"><span class="tag">Tailored to You</span></a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <nav class="nav" id="site-nav"><a href="index.html" aria-current="page">Home</a><a href="index.html#services">Services</a><a href="turnover.html">Turnover Portal</a><a href="estate.html">Estate Care</a><a href="index.html#reviews">Reviews</a><a class="btn btn-primary btn-sm" href="turnover.html">Book a Clean</a></nav>
+</div></header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <p class="kicker"><span class="dot" aria-hidden="true"></span>Pittsfield, MA · Woman-owned since 2004</p>
+          <h1 id="hero-title">Your Trusted <em>Cleaning</em> Experts</h1>
+        </div>
+        <div class="hero-side reveal" style="--d:.12s">
+          <p class="lede">Experience professional, affordable, and reliable cleaning services with over 20 years of expertise in Pittsfield.</p>
+          <div class="ctas">
+            <a class="btn btn-primary btn-lg" href="#contact">Book a Clean <svg class="i"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost btn-lg" href="#services">Explore Services</a>
+          </div>
+          <a class="rating-pill" href="#reviews" data-bcc-hide-if-empty hidden>
+            <span class="g" aria-hidden="true"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.5z"/></svg></span>
+            <span data-bcc="stars" data-size="15"></span>
+            <b data-bcc="rating"></b>
+            <span class="sep" aria-hidden="true"></span>
+            <span data-bcc="count-label"></span>
+          </a>
+        </div>
+      </div>
+
+      <figure class="hero-media reveal" style="--d:.2s">
+        <img src="assets/wall-1536x1152.jpg" width="1536" height="454" alt="The illuminated Berkshire Custom Cleaning sign — mountains, pines and the words “Tailored to You”" fetchpriority="high">
+      </figure>
+
+      <ul class="trust reveal" style="--d:.28s" aria-label="Why Berkshire Custom Cleaning">
+        <li><span class="ic"><svg class="i"><use href="#i-award"/></svg></span><div><b>20+ years</b><span>Pittsfield &amp; all of Berkshire County</span></div></li>
+        <li><span class="ic"><svg class="i"><use href="#i-heart"/></svg></span><div><b>Woman-owned</b><span>Proudly local, Equal Opportunity Employer</span></div></li>
+        <li><span class="ic"><svg class="i"><use href="#i-leaf"/></svg></span><div><b>Eco-friendly options</b><span>Green Clean on request</span></div></li>
+        <li><span class="ic"><svg class="i"><use href="#i-home"/></svg></span><div><b>Residential, commercial &amp; Airbnb</b><span>One trusted team for every space</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="section services" id="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="head">
+        <div class="reveal">
+          <p class="eyebrow">Our Services</p>
+          <h2 id="services-title">Cleaning, <em>tailored</em> to your space.</h2>
+        </div>
+        <div class="head-side reveal" style="--d:.1s">
+          <p class="lede">Choose from a range of services tailored to meet your cleaning needs. From regular house cleaning to commercial cleaning, we offer eco-friendly options for home owners, commercial clients, and Airbnb hosts.</p>
+        </div>
+      </div>
+
+      <div class="svc-grid">
+        <article class="svc card reveal">
+          <div class="svc-media-wrap">
+            <div class="svc-media"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800&q=80&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1600&q=80&auto=format&fit=crop 1600w" sizes="(max-width: 680px) 100vw, (max-width: 1080px) 50vw, 380px" width="800" height="600" loading="lazy" alt="Bright, tidy living room with white sofa and teal accents"></div>
+            <span class="svc-icon" aria-hidden="true"><svg class="i"><use href="#i-building"/></svg></span>
+          </div>
+          <div class="svc-body">
+            <h3>Residential &amp; Commercial Cleaning</h3>
+            <p>Our eco-friendly options prioritize the well-being of your space and the environment. We are proud to provide cleaning solutions that are safe, effective, and sustainable.</p>
+            <ul class="opts" aria-label="Options"><li class="chip">Simple Clean</li><li class="chip">Deep Clean</li><li class="chip">Green Clean</li></ul>
+            <a class="svc-link" href="#contact">Request a quote <svg class="i"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="svc card reveal" style="--d:.08s">
+          <div class="svc-media-wrap">
+            <div class="svc-media"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1600&q=80&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1600&q=80&auto=format&fit=crop 1600w" sizes="(max-width: 680px) 100vw, (max-width: 1080px) 50vw, 380px" width="800" height="600" loading="lazy" alt="Sunlit open-plan rental apartment, freshly made up for guests"></div>
+            <span class="svc-icon" aria-hidden="true"><svg class="i"><use href="#i-key"/></svg></span>
+          </div>
+          <div class="svc-body">
+            <h3>Airbnb &amp; Vacation Turnovers</h3>
+            <p>Experience the difference with our premium cleaning services. We guarantee a clean and fresh environment that exceeds your expectations.</p>
+            <ul class="opts" aria-label="Options"><li class="chip">Weekly</li><li class="chip">Monthly</li><li class="chip">Seasonal</li></ul>
+            <a class="svc-link" href="turnover.html">Book turnovers online <svg class="i"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="svc card reveal" style="--d:.16s">
+          <div class="svc-media-wrap">
+            <div class="svc-media"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1600&q=80&auto=format&fit=crop 1600w" sizes="(max-width: 680px) 100vw, (max-width: 1080px) 50vw, 380px" width="800" height="600" loading="lazy" alt="White clapboard house with a wraparound porch and green lawn"></div>
+            <span class="svc-icon" aria-hidden="true"><svg class="i"><use href="#i-drops"/></svg></span>
+          </div>
+          <div class="svc-body">
+            <h3>Pressure Washing</h3>
+            <p>We offer eco-friendly power washing solutions along with gentle soft washing services, ideal for delicate surfaces that require a careful touch without compromising on cleanliness.</p>
+            <ul class="opts" aria-label="Options"><li class="chip">Soft Washing</li><li class="chip">Green Cleaning</li></ul>
+            <a class="svc-link" href="#contact">Request a quote <svg class="i"><use href="#i-arrow"/></svg></a>
+          </div>
+        </article>
+
+        <article class="estate reveal" aria-labelledby="estate-title">
+          <div class="estate-media">
+            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&q=80&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&q=80&auto=format&fit=crop 1600w" sizes="(max-width: 900px) 100vw, 600px" width="1600" height="1067" loading="lazy" alt="Timber-framed mountain home glowing at dusk among the trees">
+          </div>
+          <div class="estate-body">
+            <span class="chip"><svg class="i" style="width:14px;height:14px"><use href="#i-mountain"/></svg> New service</span>
+            <h3 id="estate-title">Estate &amp; Mountain Retreat Care</h3>
+            <p>For second homes, estates and mountain retreats across the Berkshires — the same careful crew, with a plan built around how and when your property is used.</p>
+            <ul class="checks">
+              <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Seasonal opening &amp; closing</li>
+              <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Pre-arrival refresh before you or your guests arrive</li>
+              <li><span class="tick"><svg class="i"><use href="#i-check"/></svg></span>Digital walk-through report after every visit</li>
+            </ul>
+            <div class="ctas">
+              <a class="btn btn-primary" href="estate.html">Explore Estate Care <svg class="i"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn-outline-light" href="estate.html#qa">See a sample report</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONCEPTS ============ -->
+  <section class="section concepts" aria-labelledby="concepts-title">
+    <div class="wrap">
+      <div class="head">
+        <div class="reveal">
+          <p class="eyebrow"><span class="new">New</span> For hosts &amp; property managers</p>
+          <h2 id="concepts-title">Turnovers on autopilot. <em>Proof</em> in your inbox.</h2>
+        </div>
+        <div class="head-side reveal" style="--d:.1s">
+          <p class="lede">Three tools built for Airbnb hosts, second-home owners and property managers — so every guest walks into a spotless, checked-over home and you never have to chase a confirmation.</p>
+        </div>
+      </div>
+
+      <div class="feat-grid">
+        <a class="feat reveal" href="turnover.html">
+          <div class="mock" aria-hidden="true">
+            <div class="mock-bar"><span>This week</span><span class="live">Calendar synced</span></div>
+            <div class="week">
+              <span>Mon<b>13</b></span><span>Tue<b>14</b></span><span class="out">Wed<b>15</b></span><span>Thu<b>16</b></span><span>Fri<b>17</b></span><span class="out">Sat<b>18</b></span><span>Sun<b>19</b></span>
+            </div>
+            <div class="slot"><div>Lakeview Cabin<small>Guest checkout Wed · 10:00</small></div><span class="pill-ok"><svg class="i"><use href="#i-check"/></svg>Clean 11:00</span></div>
+            <div class="slot"><div>Main St Loft<small>Guest checkout Sat · 11:00</small></div><span class="pill-ok"><svg class="i"><use href="#i-check"/></svg>Clean 12:00</span></div>
+          </div>
+          <div class="feat-body">
+            <span class="feat-kicker"><svg class="i"><use href="#i-cal"/></svg>Turnover Portal</span>
+            <h3>Booked to your checkout dates</h3>
+            <p>Connect your rental calendar and every checkout gets a cleaning slot automatically. No texts, no missed turnovers.</p>
+            <span class="go">Open the portal <svg class="i"><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+
+        <a class="feat reveal" href="estate.html" style="--d:.08s">
+          <div class="mock" aria-hidden="true">
+            <div class="mock-bar"><span>Choose your clean</span><span style="color:#8fa8ae;font-weight:500;font-size:11.5px">Step 1 of 3</span></div>
+            <div class="opt on"><span class="radio"></span>Seasonal opening<small>Full open-up</small></div>
+            <div class="opt"><span class="radio"></span>Pre-arrival refresh<small>Light touch</small></div>
+            <div class="opt"><span class="radio"></span>Deep estate clean<small>Top to bottom</small></div>
+            <div class="addons"><span class="on">+ Linen change</span><span class="on">+ Windows</span><span>+ Fridge clean-out</span></div>
+          </div>
+          <div class="feat-body">
+            <span class="feat-kicker"><svg class="i"><use href="#i-sliders"/></svg>Estate Care</span>
+            <h3>Build the right clean for your property</h3>
+            <p>Pick a seasonal opening, pre-arrival refresh or deep estate clean, add the extras, and see exactly what's included.</p>
+            <span class="go">Try the selector <svg class="i"><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+
+        <a class="feat reveal" href="estate.html#qa" style="--d:.16s">
+          <div class="mock" aria-hidden="true">
+            <div class="mock-bar"><span>QA report · Lakeview Cabin</span><span class="pill-ok">Passed</span></div>
+            <div>
+              <div class="qa-row"><svg class="i"><use href="#i-check"/></svg>Kitchen<small>6 photos</small></div>
+              <div class="qa-row"><svg class="i"><use href="#i-check"/></svg>Bathrooms<small>8 photos</small></div>
+              <div class="qa-row"><svg class="i"><use href="#i-check"/></svg>Bedrooms &amp; linens<small>5 photos</small></div>
+            </div>
+            <div class="thumbs"><span></span><span></span><span></span><span></span></div>
+            <div class="sent"><svg class="i"><use href="#i-send"/></svg>Sent to property manager · 2:14 PM</div>
+          </div>
+          <div class="feat-body">
+            <span class="feat-kicker"><svg class="i"><use href="#i-clip"/></svg>QA Reports</span>
+            <h3>A digital inspection after every visit</h3>
+            <p>A room-by-room checklist with photos, sent to the property manager the moment the crew wraps up.</p>
+            <span class="go">View a sample <svg class="i"><use href="#i-arrow"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="section reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="wrap">
+      <div class="head">
+        <div class="reveal">
+          <p class="eyebrow">Client Testimonials</p>
+          <h2 id="reviews-title">Kind words from <em>our</em> neighbors.</h2>
+        </div>
+        <div class="head-side reveal" style="--d:.1s">
+          <p class="lede">Real reviews from our Google Business Profile — pulled in automatically, so this page always shows what clients are saying right now.</p>
+        </div>
+      </div>
+      <div id="bcc-reviews" class="reveal" style="--d:.15s">
+        <noscript><p>Read our reviews on <a href="https://www.google.com/maps/search/?api=1&amp;query=Berkshire+Custom+Cleaning+Pittsfield+MA">Google</a>.</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <div class="reveal">
+          <p class="eyebrow" style="margin-bottom:16px">Contact</p>
+          <h2 id="contact-title">Contact Us <em>Today</em></h2>
+          <p class="lede">For inquiries, bookings, or to learn more about our services, feel free to contact us. We are here to address all your cleaning needs.</p>
+        </div>
+        <div class="reach reveal" style="--d:.08s">
+          <a href="tel:+14137709219">
+            <span class="ic"><svg class="i"><use href="#i-phone"/></svg></span>
+            <span><small>Call us</small><strong>1-413-770-9219</strong></span>
+          </a>
+          <a class="email" href="mailto:Berkshirecustomcleaning@gmail.com">
+            <span class="ic"><svg class="i"><use href="#i-mail"/></svg></span>
+            <span><small>Email us</small><strong>Berkshirecustomcleaning<wbr>@gmail.com</strong></span>
+          </a>
+        </div>
+        <figure class="area reveal" style="--d:.14s">
+          <img src="https://images.unsplash.com/photo-1507371341162-763b5e419408?w=1600&q=80&auto=format&fit=crop" srcset="https://images.unsplash.com/photo-1507371341162-763b5e419408?w=800&q=80&auto=format&fit=crop 800w, https://images.unsplash.com/photo-1507371341162-763b5e419408?w=1600&q=80&auto=format&fit=crop 1600w" sizes="(max-width: 900px) 100vw, 540px" width="1600" height="1067" loading="lazy" alt="Autumn foliage in red, orange and gold reflected in a still lake">
+          <figcaption><svg class="i"><use href="#i-pin"/></svg><span><b>Based in Pittsfield, MA.</b> Serving homes, rentals and businesses across all of Berkshire County.</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="card quote reveal" style="--d:.1s">
+        <div id="quote-form-wrap">
+          <h3>Request a quote</h3>
+          <p>Tell us a little about your space and we'll get back to you.</p>
+          <form class="form" id="quote-form" novalidate>
+            <div class="field full">
+              <label for="q-name">Full name</label>
+              <input id="q-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="q-email">Email</label>
+              <input id="q-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="q-phone">Phone <span class="opt-tag">(optional)</span></label>
+              <input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+            </div>
+            <div class="field full">
+              <label for="q-service">Service</label>
+              <select id="q-service" name="service" required>
+                <option value="" disabled selected>Choose a service…</option>
+                <option>Residential cleaning</option>
+                <option>Commercial cleaning</option>
+                <option>Airbnb &amp; vacation turnovers</option>
+                <option>Pressure washing</option>
+                <option>Estate &amp; mountain retreat care</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="q-msg">Tell us about your space <span class="opt-tag">(optional)</span></label>
+              <textarea id="q-msg" name="message" rows="4" placeholder="Size, number of rooms, how often, any special requests…"></textarea>
+            </div>
+            <div class="form-foot">
+              <p class="form-note">Concept demo — this form doesn't send anything yet.</p>
+              <button class="btn btn-primary btn-lg" type="submit">Send request <svg class="i"><use href="#i-send"/></svg></button>
+            </div>
+          </form>
+        </div>
+        <div class="success" id="quote-success" role="status" tabindex="-1" hidden>
+          <span class="ok"><svg class="i"><use href="#i-check"/></svg></span>
+          <h3 id="success-title">Thank you!</h3>
+          <p id="success-msg">Your request is in. We'll be in touch soon.</p>
+          <p class="form-note">Demo only: nothing was actually sent. To book today, call <a href="tel:+14137709219">1-413-770-9219</a>.</p>
+          <button class="btn btn-ghost" type="button" id="quote-reset">Send another request</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <p class="brand-name">Berkshire Custom Cleaning</p>
+        <p>Woman-owned · Equal Opportunity Employer · Serving Pittsfield &amp; the Berkshires since 2004</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="index.html#services">Residential &amp; commercial</a></li>
+          <li><a href="index.html#services">Airbnb &amp; vacation turnovers</a></li>
+          <li><a href="index.html#services">Pressure washing</a></li>
+          <li><a href="estate.html">Estate &amp; retreat care</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Concepts</h4>
+        <ul>
+          <li><a href="turnover.html">Turnover Portal</a></li>
+          <li><a href="estate.html">Estate Care &amp; QA</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+14137709219">1-413-770-9219</a></li>
+          <li><a href="mailto:Berkshirecustomcleaning@gmail.com">Berkshirecustomcleaning<wbr>@gmail.com</a></li>
+          <li>Pittsfield, MA</li>
+        </ul>
+      </div>
+    </div>
+    <div class="base">
+      <span>© 2026 Berkshire Custom Cleaning®</span>
+      <span>Concept redesign — demo</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/reviews.js"></script>
+<script src="js/reviews-widget.js"></script>
+<script>
+(function () {
+  /* mobile nav */
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.querySelector('.nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+
+  /* header border on scroll */
+  var header = document.querySelector('.site-header');
+  function onScroll() { header && header.classList.toggle('scrolled', window.scrollY > 8); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* scroll reveals */
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.forEach(function (n) { io.observe(n); });
+  } else {
+    items.forEach(function (n) { n.classList.add('in'); });
+  }
+
+  /* quote form (demo — sends nothing) */
+  var form = document.getElementById('quote-form');
+  var wrap = document.getElementById('quote-form-wrap');
+  var done = document.getElementById('quote-success');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.classList.add('tried');
+      var bad = form.querySelector(':invalid');
+      if (bad) { bad.focus(); form.reportValidity(); }
+      return;
+    }
+    var first = (form.elements.name.value || '').trim().split(/\s+/)[0];
+    var svc = form.elements.service.value;
+    document.getElementById('success-title').textContent = first ? 'Thank you, ' + first + '!' : 'Thank you!';
+    document.getElementById('success-msg').textContent =
+      'Your ' + svc.toLowerCase().replace('airbnb', 'Airbnb') + ' request is in. We’ll be in touch soon at ' + form.elements.email.value.trim() + '.';
+    wrap.hidden = true;
+    done.hidden = false;
+    done.focus();
+  });
+  document.getElementById('quote-reset').addEventListener('click', function () {
+    form.reset();
+    done.hidden = true;
+    wrap.hidden = false;
+    form.elements.name.focus();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* Berkshire Custom Cleaning — shared design system (redesign)
+   Palette pulled from the logo: glacier teal, pine, deep lake navy, birch paper. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Figtree:wght@400;500;600;700&family=Mr+De+Haviland&display=swap');
+
+:root {
+  --paper: #f7f5f0;
+  --paper-2: #efebe3;
+  --card: #ffffff;
+  --ink: #12232a;
+  --ink-2: #44565c;
+  --ink-3: #7b8a8f;
+  --line: #e2ddd2;
+  --navy: #0e2731;
+  --navy-2: #163844;
+  --teal: #1f9e9c;
+  --teal-2: #2bb3b1;
+  --teal-soft: #dff1ef;
+  --pine: #2f5d50;
+  --gold: #f5b301;
+  --danger: #c2492f;
+  --ok: #2e8b57;
+
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Figtree', system-ui, -apple-system, Segoe UI, sans-serif;
+  --script: 'Mr De Haviland', cursive;
+
+  --r-sm: 8px; --r: 14px; --r-lg: 22px;
+  --shadow: 0 1px 2px rgba(14,39,49,.05), 0 8px 24px -12px rgba(14,39,49,.18);
+  --shadow-lg: 0 2px 4px rgba(14,39,49,.06), 0 24px 60px -24px rgba(14,39,49,.35);
+  --max: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.1; letter-spacing: -.01em; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 72px); }
+h2 { font-size: clamp(30px, 4vw, 46px); }
+h3 { font-size: 22px; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.section { padding: clamp(64px, 9vw, 120px) 0; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); }
+.lede { font-size: 18px; color: var(--ink-2); max-width: 56ch; }
+.muted { color: var(--ink-3); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 46px; padding: 0 22px; border-radius: 999px; font: 600 15px/1 var(--sans); text-decoration: none; border: 1px solid transparent; cursor: pointer; transition: transform .15s, background .2s, color .2s, border-color .2s; white-space: nowrap; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--teal); color: #fff; }
+.btn-primary:hover { background: #188886; }
+.btn-dark { background: var(--navy); color: #fff; }
+.btn-dark:hover { background: var(--navy-2); }
+.btn-ghost { background: transparent; border-color: currentColor; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: #fff; }
+.btn-light { background: #fff; color: var(--navy); }
+.btn-sm { height: 36px; padding: 0 16px; font-size: 14px; }
+
+/* Header */
+.site-header { position: sticky; top: 0; z-index: 50; background: rgba(247,245,240,.88); backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.site-header.scrolled { border-bottom-color: var(--line); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 20px; }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo img { height: 46px; width: auto; }
+.logo .tag { font-family: var(--script); font-size: 34px; color: var(--teal); line-height: 1; padding-top: 6px; }
+.nav { display: flex; align-items: center; gap: 28px; font-size: 15px; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--ink-2); }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
+.nav-toggle { display: none; background: none; border: 0; padding: 8px; cursor: pointer; color: var(--ink); }
+@media (max-width: 900px) {
+  .logo .tag { display: none; }
+  .nav-toggle { display: inline-flex; }
+  .nav { display: none; position: absolute; top: 76px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--paper); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 20px; }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .nav .btn { margin-top: 14px; }
+}
+
+/* Cards / forms */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow); }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 999px; background: var(--teal-soft); color: #126f6d; font-size: 13px; font-weight: 600; }
+label { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+input, select, textarea { font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 11px 14px; width: 100%; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft); }
+
+/* Stars */
+.stars { color: var(--gold); letter-spacing: 1px; }
+
+/* Footer */
+.site-footer { background: var(--navy); color: #c9d6da; padding: 64px 0 28px; font-size: 15px; }
+.site-footer a { color: #fff; text-decoration: none; }
+.site-footer .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; }
+.site-footer h4 { color: #fff; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 14px; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.site-footer .base { border-top: 1px solid rgba(255,255,255,.12); margin-top: 48px; padding-top: 22px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 13px; color: #8fa3a9; }
+@media (max-width: 800px) { .site-footer .cols { grid-template-columns: 1fr 1fr; } }
+
+/* Demo banner shown on concept pages */
+.demo-flag { background: var(--navy); color: #d7e6e9; font-size: 13px; text-align: center; padding: 8px var(--gutter); }
+.demo-flag b { color: var(--teal-2); }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+/* Shared fixes: logo PNG has a white matte and already contains "Tailored to You";
+   nav link colour must not override button text; long email wraps in footer. */
+.logo img { mix-blend-mode: multiply; }
+.logo .tag { display: none; }
+.nav a.btn-primary, .nav a.btn-primary:hover { color: #fff; }
+.site-footer a { overflow-wrap: anywhere; }
+.site-footer a:hover { color: var(--teal-2); }
